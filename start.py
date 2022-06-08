@@ -17,6 +17,18 @@ window.tk.call('wm', 'iconphoto', window._w, ico)
 window.configure(bg="light gray")
 
 
+def Fscreen(*args):
+    if a>0 :
+        cv2.imshow("Full Screen",siyahbeyazphoto)
+        cv2.waitKey(0)
+    if b>0 :
+        cv2.imshow("Full Screen",mavili)
+        cv2.waitKey(0)
+    if c>0 :
+        cv2.imshow("Full Screen",resized)
+        cv2.waitKey(0)
+        
+
 mainphoto= Label(window,height=180,width=280, bg="light gray",highlightbackground="black",highlightthickness=2,cursor='tcross',)
 mainphoto.place(x=10,y=10)
 
@@ -24,6 +36,14 @@ mainphoto.place(x=10,y=10)
 path = "@zoomin.cur"
 newphoto= Label(window,height=180,width=280,bg="light gray",highlightbackground="black",highlightthickness=2,cursor=path)
 newphoto.place(x=310,y=10)
+
+newphoto.bind("<Button-1>",Fscreen)
+
+im = Image.fromarray(imageToShow)
+img = ImageTk.PhotoImage(image=im)
+newphoto.configure(image=img)
+newphoto.image = img
+
 
 def fotograf_sec():
     filetypes=(('photo files', '*.png'),('photo files', '*.jpg'),('All files', '*.*'))
@@ -92,5 +112,49 @@ def photoedit(edit):
         cv2.imshow("Mavili",mavili)
         cv2.waitKey(0)
         mavilia = cv2.cvtColor(mavili, cv2.COLOR_BGRA2RGB)
+
+        im = Image.fromarray(mavilia)
+        img = ImageTk.PhotoImage(image=im)
+        newphoto.configure(image=img)
+        newphoto.image = img
+        
+        siyahbeyazphoto = None
+        resized = None
+        b = len(mavili)
+        a = 0
+        c = 0
+        
+        
+        
+    if edit==3:
+        giris1=Entry(window,width=10)
+        giris1.place(x=200,y=490)
+        giris1.insert(0,"En Giriniz")
+        
+        
+
+        giris2=Entry(window,width=10)
+        giris2.place(x=200,y=510)
+        giris2.insert(0,"Boy Giriniz")
+        giris2.bind('<Return>')
+        
+        en= int(giris1.get())
+        boy= int(giris2.get())
+        dim = (en,boy)
+        resized = cv2.resize(img,dim,interpolation = cv2.INTER_AREA)
+        cv2.imshow("Yeni Boyut",resized)
+        cv2.waitKey(0)
+        cv2.imwrite("Yeni Boyut.jpg",resized)
+        
+        im = Image.fromarray(resized)
+        img = ImageTk.PhotoImage(image=im)
+        newphoto.configure(image=img)
+        newphoto.image = img
+        
+        siyahbeyazphoto = None
+        mavili = None
+        c = len(resized)
+        a = 0
+        b = 0
 
 window.mainloop()
