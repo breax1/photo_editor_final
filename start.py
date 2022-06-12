@@ -41,8 +41,6 @@ def Fscreen(*args):
 mainphoto= Label(window,height=180,width=280, bg="light gray",highlightbackground="black",highlightthickness=2,cursor='tcross',)
 mainphoto.place(x=10,y=10)
 
-
-path = "@zoomin.cur"
 imageToShow= imutils.resize(image, width=500)
 imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA)
 im = Image.fromarray(imageToShow )
@@ -50,6 +48,8 @@ img = ImageTk.PhotoImage(image=im)
 
 mainphoto.configure(image=img)
 mainphoto.image = img
+
+path = "@zoomin.cur"
 newphoto= Label(window,height=180,width=280,bg="light gray",highlightbackground="black",highlightthickness=2,cursor=path)
 newphoto.place(x=310,y=10)
 
