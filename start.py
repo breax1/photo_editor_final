@@ -16,6 +16,15 @@ ico = PhotoImage(file='photoicon.ico')
 window.tk.call('wm', 'iconphoto', window._w, ico)
 window.configure(bg="light gray")
 
+im= None
+image = cv2.imread('white.brx')
+siyahbeyazphoto = None
+mavili = None
+resized = None
+a = 0
+b = 0
+c = 0
+fotograf_yolu = 1
 
 def Fscreen(*args):
     if a>0 :
@@ -34,6 +43,13 @@ mainphoto.place(x=10,y=10)
 
 
 path = "@zoomin.cur"
+imageToShow= imutils.resize(image, width=500)
+imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA)
+im = Image.fromarray(imageToShow )
+img = ImageTk.PhotoImage(image=im)
+
+mainphoto.configure(image=img)
+mainphoto.image = img
 newphoto= Label(window,height=180,width=280,bg="light gray",highlightbackground="black",highlightthickness=2,cursor=path)
 newphoto.place(x=310,y=10)
 
@@ -156,5 +172,14 @@ def photoedit(edit):
         c = len(resized)
         a = 0
         b = 0
+sec1=Button(window, text='Siyah Beyaz',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=1,command=lambda:photoedit(1))
+sec1.place(x=1,y=350)
 
+sec2=Button(window, text='Mavili',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=1,command=lambda:photoedit(2))
+sec2.place(x=1,y=420)
+
+sec3=Button(window, text='Yeniden Boyutlandır',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=1,command=lambda:photoedit(3))
+sec3.place(x=1,y=490)
+        
+        
 window.mainloop()
