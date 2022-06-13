@@ -48,10 +48,10 @@ def Fscreen(*args):
         cv2.imshow("Full Screen",cizimab)
         cv2.waitKey(0)
     if d>0 :
-        cv2.imshow("Full Screen",kirmiziliab)
+        cv2.imshow("Full Screen",yesilliab)
         cv2.waitKey(0)      
     if e>0 :
-        cv2.imshow("Full Screen",yesilliab)
+        cv2.imshow("Full Screen",kirmiziliab)
         cv2.waitKey(0) 
     if f>0 :
         cv2.imshow("Full Screen",negatifab)
@@ -136,7 +136,7 @@ def photoedit(edit):
         siyahbeyazphotoa = imutils.resize(siyahbeyazphoto, width=int(photo_size/2.3))
         siyahbeyazphotoab = imutils.resize(siyahbeyazphoto, width=int(photo_size))
         
-        cv2.imshow("Siyah Beyaz",siyahbeyazphotoab)
+        cv2.imshow("Black and White",siyahbeyazphotoab)
         cv2.waitKey(0)
         
         # Fotoğrafın önizlemesini programa görüntü olarak verme
@@ -160,7 +160,7 @@ def photoedit(edit):
         mavilia = imutils.resize(mavilir, width=int(photo_size/2.3))
         maviliab = imutils.resize(mavili, width=int(photo_size))
         
-        cv2.imshow("Mavili",maviliab)
+        cv2.imshow("Blue",maviliab)
         cv2.waitKey(0)
         
         ima = Image.fromarray(mavilir)
@@ -208,8 +208,19 @@ def photoedit(edit):
     if edit==4:
         green = np.full_like(imager,(0,255,0))
         yesilli = cv2.addWeighted(imager,0.5,green,0.5,0)
-        cv2.imshow("yesilli",yesilli)
+        yesillir = cv2.cvtColor(yesilli, cv2.COLOR_BGR2RGB)
+        yesillia = imutils.resize(yesillir, width=int(photo_size/2.3))
+        yesilliab = imutils.resize(yesilli, width=int(photo_size))
+        
+        cv2.imshow("Green",yesilli)
         cv2.waitKey(0)
+
+        ima = Image.fromarray(yesillir)
+        im = Image.fromarray(yesillia)
+        img = ImageTk.PhotoImage(image=im)
+        newphoto.configure(image=img)
+        newphoto.image = img
+        
         
         d = len(yesilli)
         a = 0
@@ -222,12 +233,23 @@ def photoedit(edit):
     if edit==5:
         red = np.full_like(imager,(0,0,255))
         kirmizili = cv2.addWeighted(imager, 1 , red, 5 ,0)
-        cv2.imshow("kirmizili",kirmizili)
+        kirmizilir = cv2.cvtColor(kirmizili, cv2.COLOR_BGR2RGB)
+        kirmizilia = imutils.resize(kirmizilir, width=int(photo_size/2.3))
+        kirmiziliab = imutils.resize(kirmizili, width=int(photo_size))
+        
+        cv2.imshow("Red",kirmizili)
         cv2.waitKey(0)
+        
+        ima = Image.fromarray(kirmizilir)
+        im = Image.fromarray(kirmizilia)
+        img = ImageTk.PhotoImage(image=im)
+        newphoto.configure(image=img)
+        newphoto.image = img
         
         e = len(kirmizili)
         a = 0
         b = 0
+        c = 0
         d = 0
         f = 0
         
@@ -239,7 +261,7 @@ def photoedit(edit):
         negatifa = imutils.resize(negatifr, width=int(photo_size/2.3))
         negatifab = imutils.resize(negatif, width=int(photo_size))
                 
-        cv2.imshow("yüksek kontrast",negatifab)
+        cv2.imshow("Negative",negatifab)
         cv2.waitKey(0) 
         
         ima = Image.fromarray(negatifr)
@@ -257,22 +279,22 @@ def photoedit(edit):
         
         
 #fotoğraf düzenleme butonları
-sec1=Button(window, text='Siyah Beyaz',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(1))
+sec1=Button(window, text='Black and White',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(1))
 sec1.place(x=10,y=320)
 
-sec2=Button(window, text='Mavili',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(2))
+sec2=Button(window, text='Blue',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(2))
 sec2.place(x=400,y=520)
 
-sec3=Button(window, text='Yeniden Boyutlandır',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(3))
+sec3=Button(window, text='Sketch',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(3))
 sec3.place(x=10,y=420)
 
-sec4=Button(window, text='Yeşilli',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(4))
+sec4=Button(window, text='Green',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(4))
 sec4.place(x=400,y=420)
 
-sec5=Button(window, text='Kırmızılı',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(5))
+sec5=Button(window, text='Red',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(5))
 sec5.place(x=400,y=320)
 
-sec6=Button(window, text='Negatif',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(6))
+sec6=Button(window, text='Negative',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(6))
 sec6.place(x=10,y=520)
         
         
