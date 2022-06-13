@@ -6,6 +6,7 @@ import cv2
 import imutils
 from PIL import Image
 from PIL import ImageTk
+from matplotlib.pyplot import gray
 import numpy as np
 
 # Pencere oluşturma kodları
@@ -20,10 +21,6 @@ window.configure(bg="light gray")
 #fonksiyon içindeki değişkenleri global yapmak için
 im= None
 image = cv2.imread('white.brx') #program ilk açıldığında çerçeve içlerini beyaz renk yapmak için değşkenin içine fotoğraf atadım
-siyahbeyazphoto = None
-mavili = None
-resized = None
-negatifab = None
 a = 0
 b = 0
 c = 0
@@ -48,7 +45,7 @@ def Fscreen(*args):
         cv2.imshow("Full Screen",maviliab)
         cv2.waitKey(0)
     if c>0 :
-        cv2.imshow("Full Screen",resized)
+        cv2.imshow("Full Screen",cizimab)
         cv2.waitKey(0)
     if f>0 :
         cv2.imshow("Full Screen",negatifab)
@@ -116,8 +113,9 @@ def photoedit(edit):
     global im
     global siyahbeyazphotoab
     global maviliab
-    global resized
-    global yasilli
+    global cizimab
+    global kirmizili
+    global yesilli
     global negatifab
     global a
     global b
@@ -142,11 +140,13 @@ def photoedit(edit):
         img = ImageTk.PhotoImage(image=im)
         newphoto.configure(image=img),
         newphoto.image = img
-        mavili = None
-        resized = None
+
         a = len(siyahbeyazphoto) #1. özelliğin seçildiğini programa anlatmak için len metodunu kullandım
         b = 0 #1. özellik seçilince diğer özellik seçimlerini iptal etmek için 0 yapıyorum
         c = 0
+        d = 0
+        e = 0
+        f = 0
         
     #2. özellik fotoğrafa mavi tonlama yapılması    
     if edit==2:
@@ -164,56 +164,65 @@ def photoedit(edit):
         newphoto.configure(image=img)
         newphoto.image = img
         
-        siyahbeyazphoto = None
-        resized = None
         b = len(mavili)
         a = 0
         c = 0
+        d = 0
+        e = 0
+        f = 0
         
         
     #3. özellik fotoğrafı yeniden boyutlandırma 
     if edit==3:
-        giris1=Entry(window,width=10)
-        giris1.place(x=200,y=490)
-        giris1.insert(0,"En Giriniz")
-
-        giris2=Entry(window,width=10)
-        giris2.place(x=200,y=510)
-        giris2.insert(0,"Boy Giriniz")
-        giris2.bind('<Return>')
+        grey= cv2.cvtColor(imager, cv2.COLOR_BGR2GRAY)
+        grey= cv2.blur(grey,(2,1))
+        edge = cv2.adaptiveThreshold(grey,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,11,11)
+        color = cv2.bilateralFilter(imager,9,250,250)
+        cizim = cv2.bitwise_and(color,color,mask=edge)
+        cizimr = cv2.cvtColor(cizim, cv2.COLOR_BGR2RGB)
+        cizima = imutils.resize(cizimr, width=int(photo_size/2.3))
+        cizimab = imutils.resize(cizim, width=int(photo_size))
         
-        en= int(giris1.get())
-        boy= int(giris2.get())
-        dim = (en,boy)
-        resized = cv2.resize(img,dim,interpolation = cv2.INTER_AREA)
-        cv2.imshow("Yeni Boyut",resized)
+        cv2.imshow("Sketch",cizimab)
         cv2.waitKey(0)
-        cv2.imwrite("Yeni Boyut.jpg",resized)
         
-        im = Image.fromarray(resized)
+        ima = Image.fromarray(cizimr)
+        im = Image.fromarray(cizima)
         img = ImageTk.PhotoImage(image=im)
         newphoto.configure(image=img)
         newphoto.image = img
         
-        siyahbeyazphoto = None
-        mavili = None
-        c = len(resized)
+        resized = None
+        c = len(cizim)
         a = 0
         b = 0
+        d = 0
+        e = 0
+        f = 0
     
     #4. özellik fotoğrafa kırmızı tonlama yapılması   
     if edit==4:
-        yasilli = cv2.convertScaleAbs(imager, alpha=1.5, beta=6)
+        yesilli = cv2.convertScaleAbs(imager, alpha=1.5, beta=6)
         cv2.imshow("yüksek kontrast",negatif)
         cv2.waitKey(0)        
         
-        d=1
+        d = len(yesilli)
+        a = 0
+        b = 0
+        c = 0
+        e = 0
+        f = 0
     
     #5. özellik fotoğrafa yeşil tonlama yapılması    
     if edit==5:
         print("kırmızılı")
         
-        e=1
+        kirmizili = None
+        e = len(kirmizili)
+        a = 0
+        b = 0
+        d = 0
+        f = 0
         
     #6. özellik fotoğrafın negatif yapılması
     if edit==6:
@@ -226,19 +235,18 @@ def photoedit(edit):
         cv2.imshow("yüksek kontrast",negatifab)
         cv2.waitKey(0) 
         
-        ima = Image.fromarray(negatif)
+        ima = Image.fromarray(negatifr)
         im = Image.fromarray(negatifa)
         img = ImageTk.PhotoImage(image=im)
         newphoto.configure(image=img)
         newphoto.image = img
         
-        siyahbeyazphoto = None
-        mavili = None
-        resized = None
         f = len(negatif)
         a = 0
         b = 0
         c = 0
+        d = 0
+        e = 0
         
         
         
