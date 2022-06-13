@@ -47,6 +47,12 @@ def Fscreen(*args):
     if c>0 :
         cv2.imshow("Full Screen",cizimab)
         cv2.waitKey(0)
+    if d>0 :
+        cv2.imshow("Full Screen",kirmiziliab)
+        cv2.waitKey(0)      
+    if e>0 :
+        cv2.imshow("Full Screen",yesilliab)
+        cv2.waitKey(0) 
     if f>0 :
         cv2.imshow("Full Screen",negatifab)
         cv2.waitKey(0)
@@ -114,8 +120,8 @@ def photoedit(edit):
     global siyahbeyazphotoab
     global maviliab
     global cizimab
-    global kirmizili
-    global yesilli
+    global kirmiziliab
+    global yesilliab
     global negatifab
     global a
     global b
@@ -132,7 +138,6 @@ def photoedit(edit):
         
         cv2.imshow("Siyah Beyaz",siyahbeyazphotoab)
         cv2.waitKey(0)
-        
         
         # Fotoğrafın önizlemesini programa görüntü olarak verme
         ima = Image.fromarray(siyahbeyazphoto)
@@ -171,8 +176,7 @@ def photoedit(edit):
         e = 0
         f = 0
         
-        
-    #3. özellik fotoğrafı yeniden boyutlandırma 
+    #3. özellik fotoğrafı çizim haline getirmesi
     if edit==3:
         grey= cv2.cvtColor(imager, cv2.COLOR_BGR2GRAY)
         grey= cv2.blur(grey,(2,1))
@@ -200,11 +204,12 @@ def photoedit(edit):
         e = 0
         f = 0
     
-    #4. özellik fotoğrafa kırmızı tonlama yapılması   
+    #4. özellik fotoğrafa yeşil tonlama yapılması   
     if edit==4:
-        yesilli = cv2.convertScaleAbs(imager, alpha=1.5, beta=6)
-        cv2.imshow("yüksek kontrast",negatif)
-        cv2.waitKey(0)        
+        green = np.full_like(imager,(0,255,0))
+        yesilli = cv2.addWeighted(imager,0.5,green,0.5,0)
+        cv2.imshow("yesilli",yesilli)
+        cv2.waitKey(0)
         
         d = len(yesilli)
         a = 0
@@ -213,11 +218,13 @@ def photoedit(edit):
         e = 0
         f = 0
     
-    #5. özellik fotoğrafa yeşil tonlama yapılması    
+    #5. özellik fotoğrafa kırımızı tonlama yapılması    
     if edit==5:
-        print("kırmızılı")
+        red = np.full_like(imager,(0,0,255))
+        kirmizili = cv2.addWeighted(imager, 1 , red, 5 ,0)
+        cv2.imshow("kirmizili",kirmizili)
+        cv2.waitKey(0)
         
-        kirmizili = None
         e = len(kirmizili)
         a = 0
         b = 0
@@ -247,7 +254,6 @@ def photoedit(edit):
         c = 0
         d = 0
         e = 0
-        
         
         
 #fotoğraf düzenleme butonları
