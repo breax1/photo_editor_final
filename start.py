@@ -14,15 +14,15 @@ window = Tk()
 window.title("Photo Editor")
 window.geometry("600x600+650+100")
 window.resizable(height=False,width=False)
-ico = PhotoImage(file='photoeditor.png')
+ico = PhotoImage(file='data/photoeditor.png')
 window.tk.call('wm', 'iconphoto', window._w, ico)
-bg=PhotoImage(file='background.png')
+bg=PhotoImage(file='data/background.png')
 bglabel = Label(window,image=bg)
 bglabel.place(x=0,y=0,relwidth=1,relheight=1)
 
 #fonksiyon içindeki değişkenleri global yapmak için
 im= None
-image = cv2.imread('photoeditorlabelbg.png') #program ilk açıldığında çerçeve içlerini beyaz renk yapmak için değşkenin içine fotoğraf atadım
+image = cv2.imread('data/photoeditorlabelbg.png') #program ilk açıldığında çerçeve içlerini beyaz renk yapmak için değşkenin içine fotoğraf atadım
 a = 0
 b = 0
 c = 0
@@ -69,7 +69,7 @@ mainphoto.configure(image=img)
 mainphoto.image = img
 
 #değiştirilem fotoğrafın çerçevesi ve önizlemesi
-path = "@zoomin.cur" 
+path = "@data/zoomin.cur" 
 newphoto= Label(window,height=180,width=280,bg="light gray",highlightbackground="black",highlightthickness=2,cursor=path)
 newphoto.place(x=302.5,y=10)
 newphoto.bind("<Button-1>",Fscreen)
@@ -107,12 +107,12 @@ def savefile():
     ima.save(filename)
 
 #Dosya seç butonu
-dosyasecbutton = ImageTk.PhotoImage(file="dosyasec.png")
+dosyasecbutton = ImageTk.PhotoImage(file="data/dosyasec.png")
 b1=Button(text="Dosya Seç",image= dosyasecbutton ,font="Arial 14 bold",bg="pink",fg="pink",cursor='hand2',width=280 ,height=30  ,command=fotograf_sec)
 b1.place(x=10,y=215)
 
 #dosya kaydet butonu
-kaydetbutton = ImageTk.PhotoImage(file="kaydet.png")
+kaydetbutton = ImageTk.PhotoImage(file="data/kaydet.png")
 save_button = Button(text="Kaydet",image= kaydetbutton ,font="Arial 14 bold",bg="pink",cursor='hand2',width=280 ,height=30 ,command=savefile)
 save_button.place(x=305,y=215)
 
@@ -283,12 +283,12 @@ def photoedit(edit):
         e = 0
 
 #buton fotoğrafları        
-blackandwhitebutton = ImageTk.PhotoImage(file="blackandwhite.png")   
-bluebutton = ImageTk.PhotoImage(file="blue.png")   
-sketchbutton = ImageTk.PhotoImage(file="sketch.png")   
-greenbutton = ImageTk.PhotoImage(file="green.png")   
-redbutton = ImageTk.PhotoImage(file="red.png")   
-negativebutton = ImageTk.PhotoImage(file="negative.png") 
+blackandwhitebutton = ImageTk.PhotoImage(file="data/blackandwhite.png")   
+bluebutton = ImageTk.PhotoImage(file="data/blue.png")   
+sketchbutton = ImageTk.PhotoImage(file="data/sketch.png")   
+greenbutton = ImageTk.PhotoImage(file="data/green.png")   
+redbutton = ImageTk.PhotoImage(file="data/red.png")   
+negativebutton = ImageTk.PhotoImage(file="data/negative.png") 
   
 #fotoğraf düzenleme butonları
 sec1=Button(window,image=blackandwhitebutton ,text='Black and White',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(1))
