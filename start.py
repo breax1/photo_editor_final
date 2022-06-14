@@ -6,17 +6,18 @@ import cv2
 import imutils
 from PIL import Image
 from PIL import ImageTk
-from matplotlib.pyplot import gray
 import numpy as np
 
+
+#---------------------------------------------------------------------------
 # Pencere oluşturma kodları
 window = Tk()
-window.title("Photo Editor")
-window.geometry("600x600+650+100")
-window.resizable(height=False,width=False)
-ico = PhotoImage(file='data/photoeditor.png')
+window.title("Photo Editor") #pencere başlığı
+window.geometry("600x600+650+100") #pencere boyutları
+window.resizable(height=False,width=False) #pencere boyutunu değiştirmeyi kapatma
+ico = PhotoImage(file='data/photoeditor.png') #pencere iconu
 window.tk.call('wm', 'iconphoto', window._w, ico)
-bg=PhotoImage(file='data/background.png')
+bg=PhotoImage(file='data/background.png') #pencere arkaplanı
 bglabel = Label(window,image=bg)
 bglabel.place(x=0,y=0,relwidth=1,relheight=1)
 
@@ -29,7 +30,7 @@ c = 0
 d = 0
 e = 0
 f = 0
-fotograf_yolu = 1
+fotograf_yolu = 1 
 
 #program ilk çalıştığında çerçeve için özel fotoğrafı yerleştirmek için
 photo_size= (image.shape[0])
@@ -38,10 +39,10 @@ imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA)
 im = Image.fromarray(imageToShow )
 img = ImageTk.PhotoImage(image=im)
 
-
-#Fotoğraf önizlemesini tam ekran yapmak
+#---------------------------------------------------------------------------
+#İşlem gören fotoğrafın önizlemesini açılır pencere tam ekran yapmak için fonksiyon
 def Fscreen(*args):
-    if a>0 :
+    if a>0 :  #6 farklı işleme 6 farklı harf atayarak işlemde hangisinin olduğunu belirten if koşulu
         cv2.imshow("Full Screen",siyahbeyazphotoab)
         cv2.waitKey(0)
     if b>0 :
@@ -60,64 +61,66 @@ def Fscreen(*args):
         cv2.imshow("Full Screen",negatifab)
         cv2.waitKey(0)
         
+#---------------------------------------------------------------------------
 
-
-#Programa atılan fotoğrafın çerçevesi ve önizlemesi
+#Programa atılan fotoğrafın çerçevesi
 mainphoto= Label(window,height=180,width=280, bg="light gray",highlightbackground="black",highlightthickness=2,cursor='tcross',)
 mainphoto.place(x=10,y=10)
-mainphoto.configure(image=img)
+mainphoto.configure(image=img) #ilk açılışta çerçeve için özel fotoğrafı yerleştirmek için
 mainphoto.image = img
 
-#değiştirilem fotoğrafın çerçevesi ve önizlemesi
+#değiştirilen fotoğrafın çerçevesi
 path = "@data/zoomin.cur" 
 newphoto= Label(window,height=180,width=280,bg="light gray",highlightbackground="black",highlightthickness=2,cursor=path)
 newphoto.place(x=302.5,y=10)
-newphoto.bind("<Button-1>",Fscreen)
-newphoto.configure(image=img)
+newphoto.bind("<Button-1>",Fscreen) #dönüştürülen fotoğrafın çerçevesine tıklandığında tekrar tam ekran açmak için atama yapıyoruz
+newphoto.configure(image=img) #ilk açılışta çerçeve için özel fotoğrafı yerleştirmek için
 newphoto.image = img
 
-
-#fotoğrafı program içine atma
+#---------------------------------------------------------------------------
+#fotoğrafı program içine atmak için açılır pencere
 def fotograf_sec():
     filetypes=(('photo files', '*.png'),('photo files', '*.jpg'),('All files', '*.*'))
     fotograf_yolu = filedialog.askopenfilename(filetypes=filetypes)
     fotograf= open(fotograf_yolu,"r")
     showinfo(title="Fotoğraf Yükleme Başarılı",message=f"Dosya yolu:\n{fotograf_yolu}")
     
-    #programa atılan fotoğrafı görüntüleme
+#---------------------------------------------------------------------------
+#seçilen fotoğrafı programın içine atma işlemi
     if len(fotograf_yolu)>0:
         global image
         global imager
-        imager = cv2.imread(fotograf_yolu)
-        image = cv2.imread(fotograf_yolu)
-        imageToShow= imutils.resize(image, width=int(photo_size/2.3))
-        imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA)
+        imager = cv2.imread(fotograf_yolu) #seçtiğimiz fotoğrafın yolunu bildiriyoruz
+        image = cv2.imread(fotograf_yolu) #önizlemelerde farklı bir değişken kullanmak için aynı işlemi 1 kez daha yapıyoruz
+        imageToShow= imutils.resize(image, width=int(photo_size/2.3)) #çerçeveye sığması için ölçeklendirme yapıyoruz
+        imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA) #rgb olarak orjinal renginde görüntülemek için
         im = Image.fromarray(imageToShow )
         img = ImageTk.PhotoImage(image=im)
 
-        mainphoto.configure(image=img)
+        mainphoto.configure(image=img) #seçilen fotoğrafı çerçeve içine atıyoruz
         mainphoto.image = img
-
-#fotoğrafı kaydetme
+#---------------------------------------------------------------------------
+#fotoğrafı kaydetmek için açılır pencere
 def savefile():
     filetypes=(('PNG files', '*.png'),('JPG files', '*.jpg'),('All files', '*.*'))
     filename = filedialog.asksaveasfile(mode='wb', defaultextension=".jpg",filetypes=filetypes)
     if not filename:
         return
     ima.save(filename)
-
+#---------------------------------------------------------------------------
 #Dosya seç butonu
-dosyasecbutton = ImageTk.PhotoImage(file="data/dosyasec.png")
+dosyasecbutton = ImageTk.PhotoImage(file="data/dosyasec.png") #buton görselleri
 b1=Button(text="Dosya Seç",image= dosyasecbutton ,font="Arial 14 bold",bg="pink",fg="pink",cursor='hand2',width=280 ,height=30  ,command=fotograf_sec)
 b1.place(x=10,y=215)
 
 #dosya kaydet butonu
-kaydetbutton = ImageTk.PhotoImage(file="data/kaydet.png")
+kaydetbutton = ImageTk.PhotoImage(file="data/kaydet.png") #buton görselleri
 save_button = Button(text="Kaydet",image= kaydetbutton ,font="Arial 14 bold",bg="pink",cursor='hand2',width=280 ,height=30 ,command=savefile)
 save_button.place(x=305,y=215)
 
 #fotoğrafları düzenlemek için fonksiyonlar
 def photoedit(edit):
+    #---------------------------------------------------------------------------
     global image
     global img
     global ima
@@ -125,7 +128,7 @@ def photoedit(edit):
     global siyahbeyazphotoab
     global maviliab
     global cizimab
-    global kirmiziliab
+    global kirmiziliab                             #Değişkenleri fonksiyon içinden çıkarıyoruz
     global yesilliab
     global negatifab
     global a
@@ -134,21 +137,23 @@ def photoedit(edit):
     global d
     global e
     global f
-    
+    #---------------------------------------------------------------------------
     #1.özellik fotoğrafın siyah-beyaz yapılması 
     if edit==1:
+        #fotoğraf dönüştürme işlemleri
         siyahbeyazphoto= cv2.cvtColor(imager, cv2.COLOR_BGR2GRAY)
-        siyahbeyazphotoa = imutils.resize(siyahbeyazphoto, width=int(photo_size/2.3))
-        siyahbeyazphotoab = imutils.resize(siyahbeyazphoto, width=int(photo_size))
+        siyahbeyazphotoa = imutils.resize(siyahbeyazphoto, width=int(photo_size/2.3)) #dönüştürülen fotoğrafın boyutu değişiklik göstereceği için boyutu ölçeklendiriyoruz
+        siyahbeyazphotoab = imutils.resize(siyahbeyazphoto, width=int(photo_size)) #dönüştürülen fotoğrafın tam ekranda gösterilmesi için orjinal boyutunda açıyoruz
         
+        #fotoğrafı dönüştürdükten sonra tam ekran da tüm fotoğrafı gösterme
         cv2.imshow("Black and White",siyahbeyazphotoab)
         cv2.waitKey(0)
         
         # Fotoğrafın önizlemesini programa görüntü olarak verme
-        ima = Image.fromarray(siyahbeyazphoto)
-        im = Image.fromarray(siyahbeyazphotoa)
+        ima = Image.fromarray(siyahbeyazphoto) #dönüştürlen fotoğrafın kayıdı için orjinal çözünürlüğün olduğu değişken
+        im = Image.fromarray(siyahbeyazphotoa) #dönüştürülen fotoğrafın ölçeklendirilmiş olduğu değişken
         img = ImageTk.PhotoImage(image=im)
-        newphoto.configure(image=img),
+        newphoto.configure(image=img), #dönüştürülen fotoğrafı çerçeve içine atıyoruz
         newphoto.image = img
 
         a = len(siyahbeyazphoto) #1. özelliğin seçildiğini programa anlatmak için len metodunu kullandım
@@ -161,7 +166,7 @@ def photoedit(edit):
     #2. özellik fotoğrafa mavi tonlama yapılması    
     if edit==2:
         mavili= cv2.cvtColor(imager, cv2.COLOR_BGRA2RGB)
-        mavilir = cv2.cvtColor(mavili, cv2.COLOR_BGRA2RGB) #mavi tonlama önizlemesi sorunlu olduğu için sadece bu özellik için 1 adet daha değişken ekledim
+        mavilir = cv2.cvtColor(mavili, cv2.COLOR_BGRA2RGB) #Önizleme çıktısı sorunlu olduğu için 1 kez daha dönüştürüyorum
         mavilia = imutils.resize(mavilir, width=int(photo_size/2.3))
         maviliab = imutils.resize(mavili, width=int(photo_size))
         
@@ -282,14 +287,17 @@ def photoedit(edit):
         d = 0
         e = 0
 
-#buton fotoğrafları        
+#---------------------------------------------------------------------------
+
+#buton dotoğraflarını bildirme        
 blackandwhitebutton = ImageTk.PhotoImage(file="data/blackandwhite.png")   
 bluebutton = ImageTk.PhotoImage(file="data/blue.png")   
 sketchbutton = ImageTk.PhotoImage(file="data/sketch.png")   
 greenbutton = ImageTk.PhotoImage(file="data/green.png")   
 redbutton = ImageTk.PhotoImage(file="data/red.png")   
-negativebutton = ImageTk.PhotoImage(file="data/negative.png") 
-  
+negativebutton = ImageTk.PhotoImage(file="data/negative.png")
+
+#---------------------------------------------------------------------------  
 #fotoğraf düzenleme butonları
 sec1=Button(window,image=blackandwhitebutton ,text='Black and White',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(1))
 sec1.place(x=10,y=320)
@@ -308,6 +316,6 @@ sec5.place(x=400,y=320)
 
 sec6=Button(window,image=negativebutton, text='Negative',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(6))
 sec6.place(x=10,y=520)
-        
+#---------------------------------------------------------------------------       
         
 window.mainloop()
