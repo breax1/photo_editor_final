@@ -14,13 +14,15 @@ window = Tk()
 window.title("Photo Editor")
 window.geometry("600x600+650+100")
 window.resizable(height=False,width=False)
-ico = PhotoImage(file='photoicon.ico')
+ico = PhotoImage(file='photoeditor.png')
 window.tk.call('wm', 'iconphoto', window._w, ico)
-window.configure(bg="light gray")
+bg=PhotoImage(file='background.png')
+bglabel = Label(window,image=bg)
+bglabel.place(x=0,y=0,relwidth=1,relheight=1)
 
 #fonksiyon içindeki değişkenleri global yapmak için
 im= None
-image = cv2.imread('white.brx') #program ilk açıldığında çerçeve içlerini beyaz renk yapmak için değşkenin içine fotoğraf atadım
+image = cv2.imread('photoeditorlabelbg.png') #program ilk açıldığında çerçeve içlerini beyaz renk yapmak için değşkenin içine fotoğraf atadım
 a = 0
 b = 0
 c = 0
@@ -104,12 +106,14 @@ def savefile():
     ima.save(filename)
 
 #Dosya seç butonu
-b1=Button(text="Dosya Seç",font="Arial 14 bold",bg="red",fg="white",cursor='hand2' ,command=fotograf_sec)
+dosyasecbutton = ImageTk.PhotoImage(file="dosyasec.png")
+b1=Button(text="Dosya Seç",image= dosyasecbutton ,font="Arial 14 bold",bg="pink",fg="pink",cursor='hand2',width=280 ,height=30  ,command=fotograf_sec)
 b1.place(x=10,y=215)
 
 #dosya kaydet butonu
-save_button = Button(window, text="Kaydet",font="Arial 14 bold",bg="red",fg="white",cursor='hand2' , command=savefile)
-save_button.place(x=507.5,y=215)
+kaydetbutton = ImageTk.PhotoImage(file="kaydet.png")
+save_button = Button(text="Kaydet",image= kaydetbutton ,font="Arial 14 bold",bg="pink",cursor='hand2',width=280 ,height=30 ,command=savefile)
+save_button.place(x=305,y=215)
 
 #fotoğrafları düzenlemek için fonksiyonlar
 def photoedit(edit):
@@ -277,24 +281,29 @@ def photoedit(edit):
         d = 0
         e = 0
         
-        
+blackandwhitebutton = ImageTk.PhotoImage(file="blackandwhite.png")   
+bluebutton = ImageTk.PhotoImage(file="blue.png")   
+sketchbutton = ImageTk.PhotoImage(file="sketch.png")   
+greenbutton = ImageTk.PhotoImage(file="green.png")   
+redbutton = ImageTk.PhotoImage(file="red.png")   
+negativebutton = ImageTk.PhotoImage(file="negative.png")   
 #fotoğraf düzenleme butonları
-sec1=Button(window, text='Black and White',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(1))
+sec1=Button(window,image=blackandwhitebutton ,text='Black and White',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(1))
 sec1.place(x=10,y=320)
 
-sec2=Button(window, text='Blue',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(2))
+sec2=Button(window,image=bluebutton , text='Blue',font='Times 15 bold ',bg='lightblue',activebackground='blue',activeforeground='lightblue',cursor='hand2', width=185,height=50,command=lambda:photoedit(2))
 sec2.place(x=400,y=520)
 
-sec3=Button(window, text='Sketch',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(3))
+sec3=Button(window,image=sketchbutton ,text='Sketch',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(3))
 sec3.place(x=10,y=420)
 
-sec4=Button(window, text='Green',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(4))
+sec4=Button(window,image=greenbutton , text='Green',font='Times 15 bold ',bg='lightgreen',activebackground='green',activeforeground='lightgreen',cursor='hand2', width=185,height=50,command=lambda:photoedit(4))
 sec4.place(x=400,y=420)
 
-sec5=Button(window, text='Red',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(5))
+sec5=Button(window,image=redbutton , text='Red',font='Times 15 bold ',bg='pink',activebackground='red',activeforeground='pink',cursor='hand2', width=185,height=50,command=lambda:photoedit(5))
 sec5.place(x=400,y=320)
 
-sec6=Button(window, text='Negative',font='Times 15 bold ',bg='pink',activebackground='black',activeforeground='white',cursor='hand2', width=15,height=2,command=lambda:photoedit(6))
+sec6=Button(window,image=negativebutton, text='Negative',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(6))
 sec6.place(x=10,y=520)
         
         
