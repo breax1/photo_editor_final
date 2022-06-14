@@ -9,11 +9,7 @@ Program yeni özellikler eklemeye müsaitdir.
 programın içindeki kodların yanlarında açıklamaları yazmaktadır
 
 Kullanılan kütüphaneler
-
--numpy
--tkinter
--cv2
--PIL
+-numpy/n-tkinter/n-cv2/n-PIL
 
 Programın kullanımı:
 1. adım -start.py adlı dosyadan programımızı çalıştırıyoruz
