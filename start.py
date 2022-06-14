@@ -31,6 +31,7 @@ e = 0
 f = 0
 fotograf_yolu = 1
 
+#program ilk çalıştığında çerçeve için özel fotoğrafı yerleştirmek için
 photo_size= (image.shape[0])
 imageToShow= imutils.resize(image, width=400)
 imageToShow = cv2.cvtColor(imageToShow, cv2.COLOR_BGR2RGBA)
@@ -280,13 +281,15 @@ def photoedit(edit):
         c = 0
         d = 0
         e = 0
-        
+
+#buton fotoğrafları        
 blackandwhitebutton = ImageTk.PhotoImage(file="blackandwhite.png")   
 bluebutton = ImageTk.PhotoImage(file="blue.png")   
 sketchbutton = ImageTk.PhotoImage(file="sketch.png")   
 greenbutton = ImageTk.PhotoImage(file="green.png")   
 redbutton = ImageTk.PhotoImage(file="red.png")   
-negativebutton = ImageTk.PhotoImage(file="negative.png")   
+negativebutton = ImageTk.PhotoImage(file="negative.png") 
+  
 #fotoğraf düzenleme butonları
 sec1=Button(window,image=blackandwhitebutton ,text='Black and White',font='Times 15 bold ',bg='gray',activebackground='gray',activeforeground='white',cursor='hand2', width=185,height=50,command=lambda:photoedit(1))
 sec1.place(x=10,y=320)
