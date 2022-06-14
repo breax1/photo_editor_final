@@ -5,7 +5,7 @@
 🔴Program yeni özellikler eklemeye müsaitdir.<br>
 🔴Programın içindeki kodların yanlarında açıklamaları yazmaktadır.<br></i>
 
-<h3>Kullanılan kütüphaneler<br></h3>
+<h3>Kullanılan kütüphaneler:</h3>
 💠numpy<br>
 💠tkinter<br>
 💠cv2<br>
