@@ -3,7 +3,7 @@
 <i>🔴UÜ Bilgisayarda Programla Final Projesi.<br>
 🔴Fotoğrafları kolay bir şekilde düzenleme amacı ile oluşturulmuştur.<br>
 🔴Program yeni özellikler eklemeye müsaitdir.<br>
-🔴Programın içindeki kodların yanlarında açıklamaları yazmaktadır<br></i>
+🔴Programın içindeki kodların yanlarında açıklamaları yazmaktadır.<br></i>
 
 <h3>Kullanılan kütüphaneler<br></h3>
 💠numpy<br>
